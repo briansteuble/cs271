@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1731296320 source:c:\users\dell3070\documents\cs271\cploration\c06\parser.c
+	"parser.h"
+
+1731296168 c:\users\dell3070\documents\cs271\cploration\c06\parser.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<ctype.h>
+	<stdbool.h>
+	<stdint.h>
+
+1731294816 source:c:\users\dell3070\documents\cs271\cploration\c06\main.c
+	"parser.h"
+
