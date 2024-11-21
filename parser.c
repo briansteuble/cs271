@@ -43,27 +43,34 @@ char *strip(char *s){
  *
  * returns: nothing
  */
-void parse(FILE * file){
+void parse(FILE *file) {
+    char line[MAX_LINE_LENGTH] = {0};
+    char label[MAX_LABEL_LENGTH] = {0};
+    int rom_address = 0;
 
-char line[MAX_LINE_LENGTH] = {0};
-char label[MAX_LABEL_LENGTH] = {0};
-int rom_address = 0;
+    while (fgets(line, sizeof(line), file)) {
+        strip(line); // Remove comments and whitespace
+        if (!*line) {
+            continue; // Skip blank lines
+        }
 
-while (fgets(line, sizeof(line), file)) {
-    strip(line);
-    if (!*line) {
-        continue;
+        if (is_Atype(line)) {
+            rom_address++; // Increment for A-type instruction
+        } else if (is_label(line)) {
+            if (extract_label(line, label)) {
+                symtable_insert(label, rom_address); // Insert label
+            } else {
+                fprintf(stderr, "Error: Invalid label in line: %s\n", line);
+            }
+        } else if (is_Ctype(line)) {
+            rom_address++; // Increment for C-type instruction
+        }
     }
-    if (is_Atype(line)) {
-        rom_address++;
-    } else if (is_label(line)) {
-        extract_label(line, label);
-        symtable_insert(label, rom_address);
-    } else if (is_Ctype(line)) {
-        rom_address++;
-    }
-        //printf("%c  %s\n", inst_type, line);
+
+    // Debug: Print the symbol table
+    symtable_display_table();
 }
+
 
 bool is_Atype(const char *line) {
     return line != NULL && line[0] == '@';
@@ -79,10 +86,14 @@ bool is_Ctype(const char *line) {
 }
 
 char *extract_label(const char *line, char *label) {
-	size_t max_length = MAX_LABEL_LENGTH - 1; 
-	size_t label_len = (len - 2 < max_length) ? len - 2 : max_length;
-	strncpy(label, line + 1, label_len);
-	label[label_len] = '\0';
-    	return label;
+    size_t len = strlen(line);
+    if (len < 3 || line[0] != '(' || line[len - 1] != ')') {
+        return NULL; // Invalid label
+    }
+    size_t max_length = MAX_LABEL_LENGTH - 1;
+    size_t label_len = (len - 2 < max_length) ? len - 2 : max_length;
+    strncpy(label, line + 1, label_len);
+    label[label_len] = '\0';
+    return label;
 }
 
