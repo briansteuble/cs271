@@ -8,6 +8,7 @@ int hash(char *str)
     int c;
     while ((c = *str++)) {
         hash = ((hash << 5) + hash) + c;
+    }
     hash %= SYMBOL_TABLE_SIZE;
     return hash;
 }
@@ -36,7 +37,7 @@ Symbol *symtable_find(char *name) {
 
    while(hashArray[hashIndex] != NULL) {
 
-      if(hashArray[hashIndex]->name == key)
+      if(hashArray[hashIndex]->name == name)
          return hashArray[hashIndex];
 
       ++hashIndex;
