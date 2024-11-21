@@ -45,36 +45,26 @@ char *strip(char *s){
  */
 void parse(FILE * file){
 
-    char inst_type;
-	char line[MAX_LINE_LENGTH] = {0};
-	char label[MAX_LABEL_LENGTH] = {0};
+char line[MAX_LINE_LENGTH] = {0};
+char label[MAX_LABEL_LENGTH] = {0};
+int rom_address = 0;
 
-	while (fgets(line, sizeof(line), file)) {
-        strip(line);
-        if(!*line) {
-            continue;
-        }
-        if (is_Atype(line)) {
-            inst_type = 'A';
-        }
-        else if (is_label(line)) {
-            inst_type = 'L';
-            extract_label(line, label);
-            if (strlen(label) < sizeof(line)) {
-                strcpy(line, extract_label(line, label);
-                symtable_insert(lable, inst_type); 
-            } else {
-            }
-        }
-        else if (is_Ctype(line)) {
-            inst_type = 'C';
-        } else {
-            inst_type = ' ';
-        }
-
+while (fgets(line, sizeof(line), file)) {
+    strip(line);
+    if (!*line) {
+        continue;
+    }
+    if (is_Atype(line)) {
+        rom_address++;
+    } else if (is_label(line)) {
+        extract_label(line, label);
+        symtable_insert(label, rom_address);
+    } else if (is_Ctype(line)) {
+        rom_address++;
+    }
         //printf("%c  %s\n", inst_type, line);
-	}
 }
+
 bool is_Atype(const char *line) {
     return line != NULL && line[0] == '@';
 }
@@ -89,9 +79,10 @@ bool is_Ctype(const char *line) {
 }
 
 char *extract_label(const char *line, char *label) {
-    size_t len = strlen(line);
-    strncpy(label, line + 1, len - 2);
-    label[len - 2] = '\0';
-    return label;
+	size_t max_length = MAX_LABEL_LENGTH - 1; 
+	size_t label_len = (len - 2 < max_length) ? len - 2 : max_length;
+	strncpy(label, line + 1, label_len);
+	label[label_len] = '\0';
+    	return label;
 }
 
