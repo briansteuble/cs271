@@ -56,19 +56,23 @@ void parse(FILE *file) {
 
         if (is_Atype(line)) {
             rom_address++; // Increment for A-type instruction
-        } else if (is_label(line)) {
-            if (extract_label(line, label)) {
-                symtable_insert(label, rom_address); // Insert label
-            } else {
-                fprintf(stderr, "Error: Invalid label in line: %s\n", line);
-            }
+        } else if (is_label(line) == 1){
+      		inst_type = 'L';
+      		char label[MAX_LABEL_LENGTH] = {0};
+     		 strcpy(line, extract_label(line, label));
+      		if (!isalpha(*label)) {
+       		 exit(EXIT_FAILURE);
+      }    
+      		if (symtable_find(label) != NULL) {  
+        	exit(EXIT_FAILURE);
+      }
+       //printf("%s\n", label);
+       symtable_insert(label, instr_num);
+       continue; 
+		
         } else if (is_Ctype(line)) {
             rom_address++; // Increment for C-type instruction
         }
-    }
-
-    // Debug: Print the symbol table
-    symtable_display_table();
 }
 
 
@@ -86,15 +90,16 @@ bool is_Ctype(const char *line) {
     return !is_Atype(line) && !is_label(line);
 }
 
-char *extract_label(const char *line, char *label) {
-    size_t len = strlen(line);
-    if (len < 3 || line[0] != '(' || line[len - 1] != ')') {
-        return NULL; // Invalid label
+char *extract_label(const char *line, char* label){
+  int i = 0;
+  for (const char *s = line; *s; s++){
+    if (*s=='(' || *s==')'){
+      continue;
     }
-    size_t max_length = MAX_LABEL_LENGTH - 1;
-    size_t label_len = (len - 2 < max_length) ? len - 2 : max_length;
-    strncpy(label, line + 1, label_len);
-    label[label_len] = '\0';
-    return label;
+    else{
+      label[i++] = *s;
+    }
+  }
+  return label;
 }
 
