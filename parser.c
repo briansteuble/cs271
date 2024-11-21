@@ -77,6 +77,7 @@ bool is_Atype(const char *line) {
 }
 
 bool is_label(const char *line) {
+    if (line == NULL) return false;
     size_t len = strlen(line);
     return len > 2 && line[0] == '(' && line[len - 1] == ')';
 }
