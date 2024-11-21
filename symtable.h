@@ -13,6 +13,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifndef SYMTABLE_H
+#define SYMTABLE_H
+
 #define SYMBOL_TABLE_SIZE 1000
 
 
@@ -29,3 +32,5 @@ struct Symbol *symtable_find(char * key);
 void symtable_insert(char* key, hack_addr addr);
 void symtable_display_table();
 void symtable_print_labels();
+
+#endif
