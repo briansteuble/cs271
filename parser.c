@@ -57,22 +57,22 @@ void parse(FILE *file) {
         if (is_Atype(line)) {
             rom_address++; // Increment for A-type instruction
         } else if (is_label(line) == 1){
-      		inst_type = 'L';
       		char label[MAX_LABEL_LENGTH] = {0};
      		 strcpy(line, extract_label(line, label));
       		if (!isalpha(*label)) {
        		 exit(EXIT_FAILURE);
-      }    
-      		if (symtable_find(label) != NULL) {  
+      }
+      		if (symtable_find(label) != NULL) {
         	exit(EXIT_FAILURE);
       }
        //printf("%s\n", label);
-       symtable_insert(label, instr_num);
-       continue; 
-		
+       symtable_insert(label, rom_address);
+       continue;
+
         } else if (is_Ctype(line)) {
             rom_address++; // Increment for C-type instruction
         }
+}
 }
 
 
@@ -102,4 +102,3 @@ char *extract_label(const char *line, char* label){
   }
   return label;
 }
-
