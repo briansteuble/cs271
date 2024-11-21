@@ -61,10 +61,9 @@ void parse(FILE * file){
             inst_type = 'L';
             extract_label(line, label);
             if (strlen(label) < sizeof(line)) {
-                strcpy(line, label);
-                symtable_insert(line, label);  // Assuming you want to insert the label
+                strcpy(line, extract_label(line, label);
+                symtable_insert(lable, inst_type); 
             } else {
-                // Handle overflow or invalid label length
             }
         }
         else if (is_Ctype(line)) {
