@@ -42,7 +42,7 @@ ARegister(in=i,load=intoA,out=A,out[0..14]=addressM);
 And(a=instruction[15],b=instruction[12],out=AorM);
 Mux16(a=A,b=inM,sel=AorM,out=AM);
 	
-	ALU(x=D,y=AM,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outtM,out=outM,zr=zr,ng=ng);
+ALU(x=D,y=AM,zx=instruction[11],nx=instruction[10],zy=instruction[9],ny=instruction[8],f=instruction[7],no=instruction[6],out=outtM,out=outM,zr=zr,ng=ng);
 
 And(a=instruction[15],b=instruction[4],out=intoD);
 DRegister(in=outtM,load=intoD,out=D);
