@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1732915257 source:c:\users\dell3070\documents\cs271\cploration\c09\error.c
+	"error.h"
+
+1732915193 c:\users\dell3070\documents\cs271\cploration\c09\error.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<stdbool.h>
+	<stdint.h>
+	<stdarg.h>
+
+1732925835 source:c:\users\dell3070\documents\cs271\cploration\c09\main.c
+	"parser.h"
+	"symtable.h"
+	"error.h"
+
+1732925835 c:\users\dell3070\documents\cs271\cploration\c09\parser.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<ctype.h>
+	<stdbool.h>
+	<stdint.h>
+	"symtable.h"
+	"error.h"
+	"hack.h"
+
+1732925835 c:\users\dell3070\documents\cs271\cploration\c09\symtable.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<ctype.h>
+	<stdbool.h>
+	<stdint.h>
+
+1732927090 source:c:\users\dell3070\documents\cs271\cploration\c09\parser.c
+	"parser.h"
+	"symtable.h"
+	"error.h"
+	"hack.h"
+
+1732927516 source:c:\users\dell3070\documents\cs271\cploration\c09\symtable.c
+	"symtable.h"
+
+1732923607 c:\users\dell3070\documents\cs271\cploration\c09\hack.h
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<stdbool.h>
+	<stdint.h>
+	<stdarg.h>
+
